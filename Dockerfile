@@ -7,13 +7,19 @@ RUN apt-get install --Yes software-properties-common
 RUN add-apt-repository ppa:certbot/certbot
 RUN apt-get update
 RUN apt-get install --Yes certbot nginx
+RUN apt-get install --Yes cron
 
 ### CONFIG NGINX ###
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm /etc/nginx/sites-available/default
-# RUN /usr/bin/openssl dhparam -out /etc/nginx/dhparams.pem 2048
 COPY nginx /etc/nginx
 
+### CONFIG CRON ###
+ADD certbot-renew-cron /etc/cron.daily/certbot-renew-cron
+RUN chmod 0755 /etc/cron.daily/certbot-renew-cron
+RUN touch /var/log/cron.log
+
+COPY env.sh /env.sh
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
