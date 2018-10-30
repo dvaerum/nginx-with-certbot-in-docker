@@ -61,7 +61,7 @@ done
 ##################################
 echo Enable all available site ###
 ##################################
-for config_file in "$NGINX_AVAILABLE/*"; do
+for config_file in "$NGINX_AVAILABLE"/*; do
     if ! [ -h "$NGINX_ENABLED/$(basename $config_file)" ]; then
         ln -s "../sites-available/$(basename $config_file)" "$NGINX_ENABLED/$(basename $config_file)"
     fi
