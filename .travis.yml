@@ -6,7 +6,7 @@ services:
   - docker
 
 script:
-  - docker build -t "${USERNAME}/${IMAGE}:latest" .
+  - docker build -t "${USERNAME}/${IMAGE}":latest .
 
 deploy:
   script:
