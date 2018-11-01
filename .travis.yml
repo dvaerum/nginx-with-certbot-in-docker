@@ -7,9 +7,8 @@ services:
 
 before_script:
   - IFS='/' read -ra TMP <<< "$TRAVIS_REPO_SLUG"
-  - echo "${TMP[0]}"
-  - if [ -z ${USERNAME+x} ]; then export "USERNAME=${TMP[0]}";
-  - if [ -z ${IMAGE+x} ];    then export "IMAGE=${TMP[1]}";
+  - if [ -z ${USERNAME+x} ]; then export "USERNAME=${TMP[0]}"; fi
+  - if [ -z ${IMAGE+x} ];    then export "IMAGE=${TMP[1]}"; fi
 
 script:
   - docker build -t "${USERNAME}/${IMAGE}":latest .
