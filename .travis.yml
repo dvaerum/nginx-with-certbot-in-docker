@@ -4,13 +4,31 @@ language: generic
 
 language: generic
 
+cache:
+  bundler: true
+  directories:
+    - $HOME/docker
+
 services:
   - docker
+
+before_cache:
+  # Save tagged docker images
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+
+before_install:
+  # Load cached docker images
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
 
 before_script:
   - IFS='/' read -ra TMP <<< "$TRAVIS_REPO_SLUG"
   - if [ -z ${USERNAME+x} ]; then export "USERNAME=${TMP[0]}"; fi
   - if [ -z ${IMAGE+x} ];    then export "IMAGE=${TMP[1]}"; fi
+  
+  # Make sure that the base image is up-to date
+  - docker pull "$(sed -n 's/FROM[ ]*\(.*\)/\1/p' 'Dockerfile')"
 
 script:
   - docker build -t "${USERNAME}/${IMAGE}:latest" .
