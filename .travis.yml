@@ -1,7 +1,15 @@
 sudo: required
 
+language: generic
+
 services:
   - docker
 
 script:
-  - printenv
+  - docker build -t "${USERNAME}/${IMAGE}:latest" .
+
+deploy:
+  script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push "${USERNAME}/${IMAGE}:latest"
+    
