@@ -4,6 +4,9 @@ set -ux
 source "/env.sh"
 
 mkdir -p "$CERT"
+if [ -z "$domains" ]; then
+    domains=""
+fi
 IFS=', ' read -r -a domains <<< "$DOMAINS"
 
 ####################
