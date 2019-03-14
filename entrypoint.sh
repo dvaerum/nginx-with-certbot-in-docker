@@ -5,7 +5,7 @@ source "/env.sh"
 
 mkdir -p "$CERT"
 
-: "${domains:=}"
+: "${DOMAINS:=}"
 IFS=', ' read -r -a domains <<< "$DOMAINS"
 
 ####################
