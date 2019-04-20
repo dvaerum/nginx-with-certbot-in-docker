@@ -17,3 +17,14 @@ NGINX_LOG_ACCESS=N
 ```
 NGINX_LOG_ERROR=Y
 ```
+
+## Mounting Point
+### /etc/nginx/sites-available
+```
+./sites-available:/etc/nginx/sites-available:ro
+```
+
+### /etc/letsencrypt
+```
+./letsencrypt:/etc/letsencrypt
+```
