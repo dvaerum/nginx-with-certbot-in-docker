@@ -5,8 +5,8 @@ source "/env.sh"
 
 mkdir -p "$CERT"
 
-: "${DOMAINS:=}"
-IFS=', ' read -r -a domains <<< "$DOMAINS"
+#: "${DOMAINS:=}"
+IFS=', ' read -r -a domains <<< "${DOMAINS-}"
 
 ####################
 echo Start Nginx ###
