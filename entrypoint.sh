@@ -92,4 +92,6 @@ else
     NGINX_LOG_ERROR=""
 fi
 
+touch "$NGINX_LOG_ACCESS"
+touch "$NGINX_LOG_ERROR"
 tail -f "$NGINX_LOG_ACCESS" "$NGINX_LOG_ERROR" "/var/log/cron.log"
