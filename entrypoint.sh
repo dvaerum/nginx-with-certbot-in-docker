@@ -82,16 +82,16 @@ echo Follow logs for nginx & cron ###
 #####################################
 if [ "$(tr '[:upper:]' '[:lower:]' <<< $NGINX_LOG_ACCESS)" = "y" ]; then
     NGINX_LOG_ACCESS="/var/log/nginx/access.log"
+    touch "$NGINX_LOG_ACCESS"
 else
     NGINX_LOG_ACCESS=""
 fi
 
 if [ "$(tr '[:upper:]' '[:lower:]' <<< $NGINX_LOG_ERROR)" = "y" ]; then
     NGINX_LOG_ERROR="/var/log/nginx/error.log"
+    touch "$NGINX_LOG_ERROR"
 else
     NGINX_LOG_ERROR=""
 fi
 
-touch "$NGINX_LOG_ACCESS"
-touch "$NGINX_LOG_ERROR"
-tail -f "$NGINX_LOG_ACCESS" "$NGINX_LOG_ERROR" "/var/log/cron.log"
+tail -f $NGINX_LOG_ACCESS $NGINX_LOG_ERROR "/var/log/cron.log"
