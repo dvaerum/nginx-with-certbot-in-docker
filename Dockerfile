@@ -9,6 +9,9 @@ RUN apt-get update
 RUN apt-get install --Yes certbot nginx
 RUN apt-get install --Yes cron
 
+### PLUGIN SCRIPTS ###
+COPY plugins /plugins
+
 ### CONFIG NGINX ###
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm /etc/nginx/sites-available/default

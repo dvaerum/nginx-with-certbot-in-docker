@@ -18,6 +18,12 @@ NGINX_LOG_ACCESS=N
 NGINX_LOG_ERROR=Y
 ```
 
+### X_FRAME_OPTIONS
+If not configured DENY is the default
+```
+X_FRAME_OPTIONS=SAMEORIGIN
+```
+
 ## Mounting Point
 ### /etc/nginx/sites-available
 ```
