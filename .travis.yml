@@ -1,7 +1,5 @@
-dist: trusty
+---
 group: travis_latest
-language: generic
-
 language: generic
 
 cache:
@@ -13,10 +11,12 @@ services:
   - docker
 
 before_install:
+  - env
   # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
 
 before_script:
+  - "if [ ${TRAVIS_BRANCH} == 'master' ]; then export TAG=latest; else export TAG=${TRAVIS_BRANCH}; fi"
   - IFS='/' read -ra TMP <<< "$TRAVIS_REPO_SLUG"
   - if [ -z ${USERNAME+x} ]; then export "USERNAME=${TMP[0]}"; fi
   - if [ -z ${IMAGE+x} ];    then export "IMAGE=${TMP[1]}"; fi
@@ -25,7 +25,7 @@ before_script:
   - docker pull "$(sed -n 's/FROM[ ]*\(.*\)/\1/p' 'Dockerfile')"
 
 script:
-  - docker build -t "${USERNAME}/${IMAGE}:latest" .
+  - docker build -t "${USERNAME}/${IMAGE}:${TAG}" .
 
 before_cache:
   # Save tagged docker images
@@ -39,5 +39,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: docker push "${USERNAME}/${IMAGE}:latest"
-    
+  script: docker push "${USERNAME}/${IMAGE}:${TAG}"
+  on:
+    all_branches: true
+

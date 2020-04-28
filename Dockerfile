@@ -3,11 +3,7 @@ MAINTAINER Dennis Værum <nn@varum.dk>
 
 RUN apt-get update
 RUN apt-get upgrade --Yes
-RUN apt-get install --Yes software-properties-common
-RUN add-apt-repository ppa:certbot/certbot
-RUN apt-get update
-RUN apt-get install --Yes certbot nginx
-RUN apt-get install --Yes cron
+RUN apt-get install --Yes certbot nginx cron
 
 ### PLUGIN SCRIPTS ###
 COPY plugins /plugins
