@@ -8,6 +8,13 @@ List the domains that you need a certificate to. If you have more then one domai
 DOMAINS=example.com,www.example.com
 ```
 
+### TEST
+Set the variable to anything to enabled the used of LetsEncrypt's stating/testing environment.
+https://letsencrypt.org/docs/staging-environment/
+```
+TEST=1
+```
+
 ### NGINX_LOG_ACCESS
 ```
 NGINX_LOG_ACCESS=N

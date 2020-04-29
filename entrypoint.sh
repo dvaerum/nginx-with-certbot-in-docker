@@ -67,9 +67,14 @@ fi
 #############################
 echo Add new certificates ###
 #############################
+extra_args=""
+if [ "${TEST:-}" != "" ]; then
+    extra_args="${extra_args} --dry-run"
+fi
+
 for domain in ${domains[@]}; do
     if ! [ -d "$LETSENCRYPT/$domain" ]; then
-        certbot certonly --domains "${domain}" --webroot --non-interactive --email "${EMAIL}" --agree-tos -w /var/www/letsencrypt
+        certbot certonly --domains "${domain}" --webroot --non-interactive --email "${EMAIL}" --agree-tos -w "/var/www/letsencrypt" ${extra_args}
     fi
 done
 
