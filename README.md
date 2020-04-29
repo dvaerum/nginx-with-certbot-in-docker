@@ -47,7 +47,6 @@ The site template should looks something like this.
 server {
     listen 443 ssl http2;
     
-    ssl on;
     ssl_certificate         /etc/letsencrypt/live/your.full.domain.name/fullchain.pem;
     ssl_certificate_key     /etc/letsencrypt/live/your.full.domain.name/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/your.full.domain.name/chain.pem;
