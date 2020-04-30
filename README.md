@@ -21,6 +21,12 @@ Set the variable to anything to enabled the flag `-x (Print commands and their a
 DEBUG=1
 ```
 
+### EMAIL
+It is **requmented** to set the specify and email there Let's Encrypt can notify you if the certificate isn't getting renewed. Hopefully you should never encounter this problem because that means that I probably failed.
+```
+EMAIL=notify_me@example.com
+```
+
 ### NGINX_LOG_ACCESS
 ```
 NGINX_LOG_ACCESS=N

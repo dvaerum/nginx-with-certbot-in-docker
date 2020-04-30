@@ -7,5 +7,5 @@ NGINX_AVAILABLE="$NGINX/sites-available"
 NGINX_ENABLED="$NGINX/sites-enabled"
 CERT="/var/www/letsencrypt"
 DHPARAM="$LETSENCRYPT/dhparams.pem"
-EMAIL="nn@nn.nn"
+EMAIL="${EMAIL:-nn@nn.nn}"
 
