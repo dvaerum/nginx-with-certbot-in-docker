@@ -72,7 +72,12 @@ if [ -d "${LETSENCRYPT_LIVE}" ]; then
    	done
     	if [ ${remove} -eq 1 ]; then
             certbot revoke --non-interactive --cert-path "${LETSENCRYPT_LIVE}/${old_domain}/cert.pem"
-            echo "Certbot - Return Code: '$?'"
+            _rc=$?
+            echo "Certbot - Return Code: ${_rc}"
+            if [ ${_rc} -ne 0 ]; then
+                cat ${LETSENCRYPT_LOG}
+            fi
+
 	    rm -rf "${LETSENCRYPT}/archive/${old_domain}"
 	    rm -rf "${LETSENCRYPT}/live/${old_domain}"
             rm -rf "${LETSENCRYPT}/renewal/${old_domain}.conf"
@@ -92,7 +97,11 @@ fi
 for domain in ${domains[@]}; do
     if ! [ -d "${LETSENCRYPT}/${domain}" ]; then
         certbot certonly --domains "${domain}" --webroot --non-interactive --email "${EMAIL}" --agree-tos -w "/var/www/letsencrypt" ${extra_args}
-        echo "Certbot - Return Code: '$?'"
+        _rc=$?
+        echo "Certbot - Return Code: ${_rc}"
+        if [ ${_rc} -ne 0 ]; then
+            cat ${LETSENCRYPT_LOG}
+        fi
     fi
 done
 
