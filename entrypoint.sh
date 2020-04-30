@@ -15,9 +15,10 @@ mkdir -p "${CERT}"
 IFS=', ' read -r -a domains <<< "${DOMAINS-}"
 
 ### Clean-up old log files
+LETSENCRYPT_LOG="/var/log/letsencrypt/letsencrypt.log"
 NGINX_LOG_ACCESS="/var/log/nginx/access.log"
 NGINX_LOG_ERROR="/var/log/nginx/error.log"
-rm -f ${NGINX_LOG_ACCESS} ${NGINX_LOG_ERROR}
+rm -f ${NGINX_LOG_ACCESS} ${NGINX_LOG_ERROR} ${LETSENCRYPT_LOG}
 touch "${NGINX_LOG_ACCESS}"
 touch "${NGINX_LOG_ERROR}"
 
@@ -67,6 +68,7 @@ if [ -d "${LETSENCRYPT_LIVE}" ]; then
    	done
     	if [ ${remove} -eq 1 ]; then
             certbot revoke --non-interactive --cert-path "${LETSENCRYPT_LIVE}/${old_domain}/cert.pem"
+            echo "Certbot - Return Code: '$?'"
 	    rm -rf "${LETSENCRYPT}/archive/${old_domain}"
 	    rm -rf "${LETSENCRYPT}/live/${old_domain}"
             rm -rf "${LETSENCRYPT}/renewal/${old_domain}.conf"
@@ -86,6 +88,7 @@ fi
 for domain in ${domains[@]}; do
     if ! [ -d "${LETSENCRYPT}/${domain}" ]; then
         certbot certonly --domains "${domain}" --webroot --non-interactive --email "${EMAIL}" --agree-tos -w "/var/www/letsencrypt" ${extra_args}
+        echo "Certbot - Return Code: '$?'"
     fi
 done
 
