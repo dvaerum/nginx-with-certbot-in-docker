@@ -14,6 +14,10 @@ mkdir -p "${CERT}"
 #: "${DOMAINS:=}"
 IFS=', ' read -r -a domains <<< "${DOMAINS-}"
 
+
+### Make sure these files are removed
+rm -f "/var/run/crond.pid" "/etc/letsencrypt/live/README"
+
 ### Clean-up old log files
 LETSENCRYPT_LOG="/var/log/letsencrypt/letsencrypt.log"
 NGINX_LOG_ACCESS="/var/log/nginx/access.log"
