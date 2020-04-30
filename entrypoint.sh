@@ -82,7 +82,7 @@ echo Add new certificates ###
 #############################
 extra_args=""
 if [ "${TEST:-}" != "" ]; then
-    extra_args="${extra_args} --dry-run"
+    extra_args="${extra_args} --test-cert"
 fi
 
 for domain in ${domains[@]}; do
