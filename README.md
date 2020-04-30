@@ -15,6 +15,12 @@ https://letsencrypt.org/docs/staging-environment/
 TEST=1
 ```
 
+### DEBUG
+Set the variable to anything to enabled the flag `-x (Print commands and their arguments as they are executed)` in the `/entrypoint.sh`.
+```
+DEBUG=1
+```
+
 ### NGINX_LOG_ACCESS
 ```
 NGINX_LOG_ACCESS=N
