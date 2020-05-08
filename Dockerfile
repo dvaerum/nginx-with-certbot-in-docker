@@ -6,19 +6,19 @@ RUN apt-get upgrade --Yes
 RUN apt-get install --Yes certbot nginx cron
 
 ### PLUGIN SCRIPTS ###
-COPY plugins /plugins
+COPY src/plugins /plugins
 
 ### CONFIG NGINX ###
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm /etc/nginx/sites-available/default
-COPY nginx /etc/nginx
+COPY src/nginx /etc/nginx
 
 ### CONFIG CRON ###
-ADD certbot-renew-cron /etc/cron.daily/certbot-renew-cron
+COPY src/certbot-renew-cron /etc/cron.daily/certbot-renew-cron
 RUN chmod 0755 /etc/cron.daily/certbot-renew-cron
 RUN touch /var/log/cron.log
 
-COPY env.sh /env.sh
-COPY entrypoint.sh /entrypoint.sh
+COPY src/env.sh /env.sh
+COPY src/entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
