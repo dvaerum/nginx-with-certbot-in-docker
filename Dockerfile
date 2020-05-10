@@ -4,6 +4,9 @@ MAINTAINER Dennis Værum <nn@varum.dk>
 RUN apt-get update
 RUN apt-get upgrade --Yes
 RUN apt-get install --Yes certbot nginx cron
+RUN apt-get install --Yes curl
+
+run curl https://get.acme.sh | sh
 
 ### PLUGIN SCRIPTS ###
 COPY src/plugins /plugins
