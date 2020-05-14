@@ -14,7 +14,7 @@ services:
 
 before_install:
   # Load cached docker images
-  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
+  - [[ -f $HOME/docker/nginx-with-certbot-in-docker.gz ]] && sh -c "zcat $HOME/docker/nginx-with-certbot-in-docker.gz | docker load"
 
 before_script:
   - IFS='/' read -ra TMP <<< "$TRAVIS_REPO_SLUG"
@@ -30,8 +30,7 @@ script:
 before_cache:
   # Save tagged docker images
   - >
-    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
-    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+    mkdir -p $HOME/docker && rm -rf $HOME/docker/* && sh -c "docker save ${USERNAME}/${IMAGE}:latest | gzip -2 > $HOME/docker/nginx-with-certbot-in-docker.gz"
 
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
