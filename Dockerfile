@@ -8,6 +8,9 @@ RUN apt-get install --Yes curl
 
 run curl https://get.acme.sh | sh
 
+### PLUGIN SCRIPTS ###
+COPY plugins /plugins
+
 ### CONFIG NGINX ###
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm /etc/nginx/sites-available/default

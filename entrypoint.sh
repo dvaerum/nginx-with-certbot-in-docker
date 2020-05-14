@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# ex: set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab:
+
 set -ux
 
 source "/env.sh"
@@ -7,6 +9,17 @@ mkdir -p "$CERT"
 
 #: "${DOMAINS:=}"
 IFS=', ' read -r -a domains <<< "${DOMAINS-}"
+
+
+###########################
+echo Run plugin scripts ###
+###########################
+for file in /plugins/*.sh; do
+    if [ -x ${file} ]; then
+        ${file}
+    fi
+done
+
 
 ####################
 echo Start Nginx ###
@@ -59,6 +72,7 @@ for domain in ${domains[@]}; do
         certbot certonly --domains "${domain}" --webroot --non-interactive --email "${EMAIL}" --agree-tos -w /var/www/letsencrypt
     fi
 done
+
 
 ##################################
 echo Enable all available site ###
