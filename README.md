@@ -2,7 +2,7 @@
 This docker container is based on the last LTS of Ubuntu server. It is make as a service for handling the creation, renewal and removed of TLS certificates simply by listing the domains. It also setup Nginx and allow you to use it as a web-server or a reverse proxy. Finally HTTP request are automated redirected to HTTPS (http2https).
 
 ## Optional configuration variables
-### DOMANIS
+### DOMAINS
 List the domains that you need a certificate for. If you have more then one domain you can seperate them with a comma (,) as showen in the example.
 ```
 DOMAINS=example.com,www.example.com
@@ -37,11 +37,42 @@ NGINX_LOG_ACCESS=N
 NGINX_LOG_ERROR=Y
 ```
 
-### X_FRAME_OPTIONS
-If not configured DENY is the default
+### CLI_TOOL (experimentle)
+Pick between usung `certbot` or `acme.sh`
+```
+CLI_TOOL=certbot
+```
+
+### ACME_METHOD (experimentle)
+Pick between usung `http` or `dns-FOLLOW_BY_PLUGIN`
+```
+ACME_METHOD=http
+```
+
+### STRICT_TRANSPORT_SECURITY (plugin)
+If not configured `max-age=15768000; includeSubdomains; preload` is the default
+```
+STRICT_TRANSPORT_SECURITY=SAMEORIGIN
+```
+
+### X_CONTENT_TYPE_OPTIONS:- (plugin)
+If not configured `nosniff` is the default
+```
+X_CONTENT_TYPE_OPTIONS=nosniff
+```
+
+### X_FRAME_OPTIONS (plugin)
+If not configured `DENY` is the default
 ```
 X_FRAME_OPTIONS=SAMEORIGIN
 ```
+
+### PLUGIN_SSL_DISABLE_HEADER (plugin)
+If not configured `Strict-Transport-Security`, `X-Content-Type-Options` and `X-Frame-Options` is enabled by default
+```
+PLUGIN_SSL_DISABLE_HEADER=Strict-Transport-Security X-Content-Type-Options X-Frame-Options
+```
+
 
 ## Mounting Point
 The mountpoint supported by this container
