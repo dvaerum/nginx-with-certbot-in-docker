@@ -16,7 +16,7 @@ TEST=1
 ```
 
 ### DEBUG
-Set the variable to anything to enabled the flag `-x (Print commands and their arguments as they are executed)` in the `/entrypoint.sh`.
+Enable the debugging flag `--debug` for acme.sh
 ```
 DEBUG=1
 ```
@@ -37,14 +37,24 @@ NGINX_LOG_ACCESS=N
 NGINX_LOG_ERROR=Y
 ```
 
+### RENEW_INTERVAL
+Set the internal for how offen the certificate should be checked for renewel (default is `1d`)
+```
+RENEW_INTERVAL=1d
+```
+Note: Using the sleep command, so check `man sleep` for accepted values
+
 ### CLI_TOOL (experimentle)
-Pick between usung `certbot` or `acme.sh`
+Pick between usung `certbot` or `acme.sh` (default is `certbot`)
 ```
 CLI_TOOL=certbot
 ```
 
 ### ACME_METHOD (experimentle)
-Pick between usung `http` or `dns-FOLLOW_BY_PLUGIN`
+Pick between usung `http` or `dns-FOLLOW_BY_PLUGIN` (default is `http`)
+List of plugins for...
+- certbot - https://certbot.eff.org/docs/using.html#dns-plugins
+- acme.sh - https://github.com/acmesh-official/acme.sh/wiki/dnsapi
 ```
 ACME_METHOD=http
 ```
@@ -73,6 +83,11 @@ If not configured `Strict-Transport-Security`, `X-Content-Type-Options` and `X-F
 PLUGIN_SSL_DISABLE_HEADER=Strict-Transport-Security X-Content-Type-Options X-Frame-Options
 ```
 
+### DEBUG_BASH
+Set the variable to anything to enabled the flag `-x (Print commands and their arguments as they are executed)` in the `/entrypoint.sh`.
+```
+DEBUG_BASH=1
+```
 
 ## Mounting Point
 The mountpoint supported by this container

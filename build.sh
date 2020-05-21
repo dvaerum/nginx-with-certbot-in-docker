@@ -67,12 +67,13 @@ fi
 
 if [ "${BUILD:-0}" == 1 ]; then
   docker pull "$(sed -En 's_FROM[ ]+(.+)_\1_p' 'Dockerfile')"
+  [ ! -d acme.sh ] && git clone --depth 1 "https://github.com/acmesh-official/acme.sh" --branch "dev"
   docker build -t "${USERNAME}/${REPO}:${DOCKER_TAG}" .
+  rm -rf "acme.sh"
 fi
 
 if [ "${DEPLOY:-0}" == 1 ]; then
   echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   docker push "${USERNAME}/${REPO}:${DOCKER_TAG}"
 fi
-
 
