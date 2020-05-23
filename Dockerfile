@@ -5,16 +5,11 @@ RUN apt-get update
 RUN apt-get upgrade --Yes
 RUN apt-get install --Yes certbot nginx
 RUN apt-get install --Yes curl socat
-#RUN apt-get install --Yes supervisor
-
-### CONFIG SUPERVISORD
-#ADD src/etc /etc
 
 ### PLUGIN SCRIPTS ###
 COPY src/plugins /plugins
 
 ### CONFIG NGINX ###
-#RUN sed -Ei '/^[[:space:]]*(pid)/d' /etc/nginx/nginx.conf
 RUN sed -Ei '1 i daemon off;' /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm /etc/nginx/sites-available/default
@@ -30,5 +25,4 @@ COPY src/entrypoint.sh /entrypoint.sh
 ADD acme.sh /opt/acme.sh
 RUN ln -s /opt/acme.sh/acme.sh /usr/bin/acme.sh
 
-#ENTRYPOINT [ "/usr/bin/supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf" ]
 ENTRYPOINT [ "/entrypoint.sh" ]

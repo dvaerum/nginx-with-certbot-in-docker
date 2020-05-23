@@ -4,8 +4,8 @@
 set -eu
 
 TEST_FOLDER="$PWD/test"
-ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DEBUG=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1 --env RENEW_INTERVAL=1m"
-#ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1"
+#ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DEBUG=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1 --env RENEW_INTERVAL=1m"
+ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1"
 
 
 if ! [ -d "test" ]; then
