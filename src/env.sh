@@ -12,6 +12,6 @@ EMAIL="${EMAIL:-nn@gmail.com}"
 
 ### Variables for acme.sh
 export LE_WORKING_DIR="/opt/acme.sh"
-export LE_CONFIG_HOME="/etc/letsencrypt/config"
-export CERT_HOME="/etc/letsencrypt/certs"
+export LE_CONFIG_HOME="${LETSENCRYPT}/config"
+export LE_CERT_HOME="${LETSENCRYPT}/certs"
 export ACCOUNT_EMAIL="${EMAIL}"

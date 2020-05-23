@@ -48,7 +48,7 @@ fi
 export extra_args
 
 ### Make sure these files are removed
-rm -f "/etc/letsencrypt/live/README" "${LETSENCRYPT_LOG}"
+rm -f "${LETSENCRYPT_LIVE}/README" "${LETSENCRYPT_LOG}"
 
 
 #############################
@@ -172,8 +172,8 @@ for domain in ${domains[@]}; do
         fi
         ### acme.sh
         if [ "${CLI_TOOL}" == "acme.sh" ]; then
-            mkdir -p "/etc/letsencrypt/certs/${domain}" "/etc/letsencrypt/live/${domain}"
-            chmod 700 "/etc/letsencrypt/certs/${domain}"
+            mkdir -p "${LE_CERT_HOME}/${domain}" "${LETSENCRYPT_LIVE}/${domain}" "${LE_CONFIG_HOME}"
+            chmod 700 "${LE_CERT_HOME}/${domain}" "${LE_CONFIG_HOME}"
 
             ### HTTP Challenge
             if [ "${ACME_METHOD}" == "http" ]; then
@@ -185,10 +185,10 @@ for domain in ${domains[@]}; do
                 acme.sh --issue --dns "${ACME_METHOD}" --dnssleep 300  ${extra_args} --domain "${domain}"
             fi
 
-            ln -s "../../certs/${domain}/${domain}.cer" "/etc/letsencrypt/live/${domain}/cert.pem"
-            ln -s "../../certs/${domain}/ca.cer"        "/etc/letsencrypt/live/${domain}/chain.pem"
-            ln -s "../../certs/${domain}/fullchain.cer" "/etc/letsencrypt/live/${domain}/fullchain.pem"
-            ln -s "../../certs/${domain}/${domain}.key" "/etc/letsencrypt/live/${domain}/privkey.pem"
+            ln -s "../../certs/${domain}/${domain}.cer" "${LETSENCRYPT_LIVE}/${domain}/cert.pem"
+            ln -s "../../certs/${domain}/ca.cer"        "${LETSENCRYPT_LIVE}/${domain}/chain.pem"
+            ln -s "../../certs/${domain}/fullchain.cer" "${LETSENCRYPT_LIVE}/${domain}/fullchain.pem"
+            ln -s "../../certs/${domain}/${domain}.key" "${LETSENCRYPT_LIVE}/${domain}/privkey.pem"
         fi
     fi
 done
