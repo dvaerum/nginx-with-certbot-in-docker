@@ -17,7 +17,7 @@ script:
   - env
   - ./build.sh --print-vars
   - ./build.sh --build
-  - ./test/run_tests.sh
+  - bash -x ./test/run_tests.sh
 
 before_cache:
   # Save tagged docker images
