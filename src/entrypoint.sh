@@ -150,7 +150,7 @@ fi
 echo Add new certificates ###
 #############################
 for domain in ${domains[@]}; do
-    if ! [ -d "${LETSENCRYPT}/${domain}" ]; then
+    if ! [ -d "${LETSENCRYPT}/archive/${domain}" ]; then
         ### CertBot
         if [ "${CLI_TOOL}" == "certbot" ]; then
             ### HTTP Challenge
@@ -170,6 +170,8 @@ for domain in ${domains[@]}; do
                 cat ${LETSENCRYPT_LOG}
             fi
         fi
+    fi
+    if ! [ -d "${LE_CERT_HOME}/${domain}" ]; then
         ### acme.sh
         if [ "${CLI_TOOL}" == "acme.sh" ]; then
             mkdir -p "${LE_CERT_HOME}/${domain}" "${LETSENCRYPT_LIVE}/${domain}" "${LE_CONFIG_HOME}"
