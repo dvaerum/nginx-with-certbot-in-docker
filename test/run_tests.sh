@@ -4,8 +4,8 @@
 set -eu
 
 TEST_FOLDER="$PWD/test"
-#ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DEBUG=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1 --env RENEW_INTERVAL=1m"
-ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1"
+#DOCKER_ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1 --env DEBUG=1 --env RENEW_INTERVAL=1m"
+DOCKER_ARGS="-v ${TEST_FOLDER}/sites-available:/etc/nginx/sites-available --env TEST=1 --env DOMAINS=test.varum.dk --env DEBUG_BASH=1"
 
 
 if ! [ -d "test" ]; then
@@ -29,10 +29,11 @@ curl --silent 'https://letsencrypt.org/certs/fakelerootx1.pem' --output "$TEST_F
 dns_challenge() {
     docker_id=$(docker run \
         ${DOCKER_ENV} \
+        ${DOCKER_ARGS_EXTRA:-} \
         --env CLI_TOOL="acme.sh" \
         --env ACME_METHOD="${ACME_METHOD}" \
         --env DOMAINS="${DOMAIN}" \
-        ${ARGS} \
+        ${DOCKER_ARGS} \
         --detach dvaerum/nginx-with-certbot-in-docker:dev)
 
 
