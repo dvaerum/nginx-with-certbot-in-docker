@@ -171,11 +171,11 @@ for domain in ${domains[@]}; do
             fi
         fi
     fi
-    if ! [ -d "${LE_CERT_HOME}/${domain}" ]; then
+    if ! [ -d "${CERT_HOME}/${domain}" ]; then
         ### acme.sh
         if [ "${CLI_TOOL}" == "acme.sh" ]; then
-            mkdir -p "${LE_CERT_HOME}/${domain}" "${LETSENCRYPT_LIVE}/${domain}" "${LE_CONFIG_HOME}"
-            chmod 700 "${LE_CERT_HOME}/${domain}" "${LE_CONFIG_HOME}"
+            mkdir -p "${CERT_HOME}/${domain}" "${LETSENCRYPT_LIVE}/${domain}" "${LE_CONFIG_HOME}"
+            chmod 700 "${CERT_HOME}/${domain}" "${LE_CONFIG_HOME}"
 
             ### HTTP Challenge
             if [ "${ACME_METHOD}" == "http" ]; then
