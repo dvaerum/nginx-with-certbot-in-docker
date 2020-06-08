@@ -205,6 +205,10 @@ for config_file in "${NGINX_AVAILABLE}"/*; do
     fi
 done
 
+### Sleep, if nginx is not ready
+while ! ps aux | grep www-data | grep --quiet 'nginx: worker process'; do
+    sleep 1;
+done
 /usr/sbin/nginx -s reload
 
 
