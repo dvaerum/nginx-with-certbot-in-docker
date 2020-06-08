@@ -8,19 +8,6 @@ List the domains that you need a certificate for. If you have more then one doma
 DOMAINS=example.com,www.example.com
 ```
 
-### TEST
-Set the variable to anything to enabled the used of LetsEncrypt's stating/testing environment.
-https://letsencrypt.org/docs/staging-environment/
-```
-TEST=1
-```
-
-### DEBUG
-Enable the debugging flag `--debug` for acme.sh
-```
-DEBUG=1
-```
-
 ### EMAIL
 It is **requmented** to set the specify and email there Let's Encrypt can notify you if the certificate isn't getting renewed. Hopefully you should never encounter this problem because that means that I probably failed.
 ```
@@ -44,6 +31,25 @@ RENEW_INTERVAL=1d
 ```
 Note: Using the sleep command, so check `man sleep` for accepted values
 
+### TEST
+Set the variable to anything to enabled the used of LetsEncrypt's stating/testing environment.
+https://letsencrypt.org/docs/staging-environment/
+```
+TEST=1
+```
+
+### DEBUG
+Enable the debugging flag `--debug` for acme.sh
+```
+DEBUG=1
+```
+
+### DEBUG_BASH
+Set the variable to anything to enabled the flag `-x (Print commands and their arguments as they are executed)` in the `/entrypoint.sh`.
+```
+DEBUG_BASH=1
+```
+
 ### CLI_TOOL (experimentle)
 Pick between usung `certbot` or `acme.sh` (default is `certbot`)
 ```
@@ -59,34 +65,29 @@ List of plugins for...
 ACME_METHOD=http
 ```
 
-### STRICT_TRANSPORT_SECURITY (plugin)
+## Optional PLUGIN configuration variables
+### STRICT_TRANSPORT_SECURITY
 If not configured `max-age=15768000; includeSubdomains; preload` is the default
 ```
-STRICT_TRANSPORT_SECURITY=SAMEORIGIN
+STRICT_TRANSPORT_SECURITY=max-age=15768000; includeSubdomains; preload
 ```
 
-### X_CONTENT_TYPE_OPTIONS:- (plugin)
+### X_CONTENT_TYPE_OPTIONS
 If not configured `nosniff` is the default
 ```
 X_CONTENT_TYPE_OPTIONS=nosniff
 ```
 
-### X_FRAME_OPTIONS (plugin)
+### X_FRAME_OPTIONS
 If not configured `DENY` is the default
 ```
 X_FRAME_OPTIONS=SAMEORIGIN
 ```
 
-### PLUGIN_SSL_DISABLE_HEADER (plugin)
+### PLUGIN_SSL_DISABLE_HEADER
 If not configured `Strict-Transport-Security`, `X-Content-Type-Options` and `X-Frame-Options` is enabled by default
 ```
 PLUGIN_SSL_DISABLE_HEADER=Strict-Transport-Security X-Content-Type-Options X-Frame-Options
-```
-
-### DEBUG_BASH
-Set the variable to anything to enabled the flag `-x (Print commands and their arguments as they are executed)` in the `/entrypoint.sh`.
-```
-DEBUG_BASH=1
 ```
 
 ## Mounting Point
