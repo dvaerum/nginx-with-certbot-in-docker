@@ -67,13 +67,25 @@ ACME_METHOD=http
 
 ## Optional PLUGIN configuration variables
 ### STRICT_TRANSPORT_SECURITY
+The HTTP `Strict-Transport-Security` response header (often abbreviated as [HSTS](https://developer.mozilla.org/en-US/docs/Glossary/HSTS)) lets a web site tell browsers that it should only be accessed using HTTPS, instead of using HTTP.  
+
 If not configured `max-age=15768000; includeSubdomains; preload` is the default
 ```
 STRICT_TRANSPORT_SECURITY=max-age=15768000; includeSubdomains; preload
 ```
+**Learn more:** https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
+
+### CONTENT_SECURITY_POLICY
+The HTTP `Content-Security-Policy` response header allows web site administrators to control resources the user agent is allowed to load for a given page. With a few exceptions, policies mostly involve specifying server origins and script endpoints. This helps guard against cross-site scripting attacks ([XSS](https://developer.mozilla.org/en-US/docs/Glossary/XSS)).  
+
+If not configured `frame-ancestors 'none'` is the default
+```
+CONTENT_SECURITY_POLICY=frame-ancestors 'none'
+```
+**Learn more:** https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
 ### X_CONTENT_TYPE_OPTIONS
-If not configured `nosniff` is the default
+If not configured `nosniff` is the default.
 ```
 X_CONTENT_TYPE_OPTIONS=nosniff
 ```
@@ -83,9 +95,11 @@ If not configured `DENY` is the default
 ```
 X_FRAME_OPTIONS=SAMEORIGIN
 ```
+**Note:** The [Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) HTTP header has a [frame-ancestors](https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) directive which obsoletes this header for supporting browsers.
 
 ### PLUGIN_SSL_DISABLE_HEADER
-If not configured `Strict-Transport-Security`, `X-Content-Type-Options` and `X-Frame-Options` is enabled by default
+If not configured `Strict-Transport-Security`, `X-Content-Type-Options` and `Content-Security-Policy` is enabled by default.  
+`X_FRAME_OPTIONS` is disabled by default.
 ```
 PLUGIN_SSL_DISABLE_HEADER=Strict-Transport-Security X-Content-Type-Options X-Frame-Options
 ```
@@ -96,7 +110,8 @@ The mountpoint supported by this container
 ### /etc/nginx/sites-available
 All websites you to want to setup should be put in this folder, one file per site.
 ```
-./sites-available:/etc/nginx/sites-available:ro
+volumes:
+  - ./sites-available:/etc/nginx/sites-available:ro
 ```
 The site template should looks something like this.  
 **NOTES:**  
@@ -125,5 +140,6 @@ server {
 ### /etc/letsencrypt
 All the Let's Encrypt certificates are stored at this location
 ```
-./letsencrypt:/etc/letsencrypt
+volumes:
+  - ./letsencrypt:/etc/letsencrypt
 ```
