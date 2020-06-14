@@ -209,9 +209,11 @@ done
 while ! ps aux | grep www-data | grep --quiet 'nginx: worker process'; do
     sleep 1;
 done
+
+### Run this command up-on `EXIT` or when reciving the following signals `INT` or `TERM`
+trap "/usr/sbin/nginx -s stop" EXIT INT TERM
+
 /usr/sbin/nginx -s reload
-
-
 #####################################
 echo Call nginx to the foreground ###
 #####################################
