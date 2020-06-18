@@ -110,7 +110,7 @@ jobs -l
 ##############################################
 echo Revoke and remove unused certificates ###
 ##############################################
-if [ -d "${LETSENCRYPT_LIVE}" ]; then
+if [ -d "${LETSENCRYPT_LIVE}" ] && [ -n "$(ls -A letsencrypt/live)" ]; then
     for old_domain in ${LETSENCRYPT_LIVE}/*; do
         old_domain="$(basename ${old_domain})"
         remove=1
@@ -171,7 +171,7 @@ for domain in ${domains[@]}; do
             fi
         fi
     fi
-    if ! [ -d "${CERT_HOME}/${domain}" ]; then
+    if [ ! -d "${CERT_HOME}/${domain}" ] || [ ! -f "${CERT_HOME}/${domain}/${domain}.cer" ] || [ ! -f "${CERT_HOME}/${domain}/ca.cer" ] || [ ! -f "${CERT_HOME}/${domain}/fullchain.cer" ] || [ ! -f "${CERT_HOME}/${domain}/${domain}.key" ]; then
         ### acme.sh
         if [ "${CLI_TOOL}" == "acme.sh" ]; then
             mkdir -p "${CERT_HOME}/${domain}" "${LE_CONFIG_HOME}"
