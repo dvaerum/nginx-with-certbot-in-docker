@@ -19,6 +19,7 @@ COPY src/nginx /etc/nginx
 ### ADD SCRIPTS ###
 COPY src/env.sh /env.sh
 COPY src/certs-renew.sh /certs-renew.sh
+COPY src/wait_for_nginx.sh /wait_for_nginx.sh
 COPY src/entrypoint.sh /entrypoint.sh
 
 ### acme.sh

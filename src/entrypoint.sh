@@ -205,10 +205,9 @@ for config_file in "${NGINX_AVAILABLE}"/*; do
     fi
 done
 
-### Sleep, if nginx is not ready
-while ! ps aux | grep www-data | grep --quiet 'nginx: worker process'; do
-    sleep 1;
-done
+### Sometimes we need to wait 1 or 2sec for nginx to start before we can reload, that is what it done here.
+### It is nornally only something there happen when we don't new to create/renew certs
+timeout 30s "/wait_for_nginx.sh"
 
 ### Run this command up-on `EXIT` or when reciving the following signals `INT` or `TERM`
 trap "/usr/sbin/nginx -s stop" EXIT INT TERM
