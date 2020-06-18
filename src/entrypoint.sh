@@ -174,7 +174,7 @@ for domain in ${domains[@]}; do
     if ! [ -d "${CERT_HOME}/${domain}" ]; then
         ### acme.sh
         if [ "${CLI_TOOL}" == "acme.sh" ]; then
-            mkdir -p "${CERT_HOME}/${domain}" "${LETSENCRYPT_LIVE}/${domain}" "${LE_CONFIG_HOME}"
+            mkdir -p "${CERT_HOME}/${domain}" "${LE_CONFIG_HOME}"
             chmod 700 "${CERT_HOME}/${domain}" "${LE_CONFIG_HOME}"
 
             ### HTTP Challenge
@@ -187,6 +187,8 @@ for domain in ${domains[@]}; do
                 acme.sh --issue --dns "${ACME_METHOD}" --dnssleep 300  ${extra_args} --domain "${domain}"
             fi
 
+            ### Make acme.sh backwards compatable to the certbot setup, but create a 'live' file and create symbolic link there maps to the cert-files
+            mkdir -p "${LETSENCRYPT_LIVE}/${domain}" 
             ln -s "../../certs/${domain}/${domain}.cer" "${LETSENCRYPT_LIVE}/${domain}/cert.pem"
             ln -s "../../certs/${domain}/ca.cer"        "${LETSENCRYPT_LIVE}/${domain}/chain.pem"
             ln -s "../../certs/${domain}/fullchain.cer" "${LETSENCRYPT_LIVE}/${domain}/fullchain.pem"
