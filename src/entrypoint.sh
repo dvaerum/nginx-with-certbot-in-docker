@@ -110,7 +110,7 @@ jobs -l
 ##############################################
 echo Revoke and remove unused certificates ###
 ##############################################
-if [ -d "${LETSENCRYPT_LIVE}" ] && [ -n "$(ls -A letsencrypt/live)" ]; then
+if [ -d "${LETSENCRYPT_LIVE}" ] && [ -n "$(ls -A "${LETSENCRYPT_LIVE}")" ]; then
     for old_domain in ${LETSENCRYPT_LIVE}/*; do
         old_domain="$(basename ${old_domain})"
         remove=1
