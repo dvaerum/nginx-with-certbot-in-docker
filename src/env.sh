@@ -9,6 +9,10 @@ NGINX_ENABLED="${NGINX}/sites-enabled"
 DHPARAM="${LETSENCRYPT}/dhparams.pem"
 EMAIL="${EMAIL:-nn@gmail.com}"
 
+### Set default tool and method
+CLI_TOOL="${CLI_TOOL:-certbot}"
+ACME_METHOD="${ACME_METHOD:-http}"
+
 
 ### Variables for acme.sh
 export LE_WORKING_DIR="/opt/acme.sh"

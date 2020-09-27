@@ -13,9 +13,7 @@ source "/env.sh"
 IFS=', ' read -r -a domains <<< "${DOMAINS-}"
 
 ### Select CLI tool
-if [ -z "${CLI_TOOL:-}" ]; then
-    CLI_TOOL=certbot
-elif [ "${CLI_TOOL}" == "certbot" ] || [ "${CLI_TOOL}" == "acme.sh" ] ; then
+if [ "${CLI_TOOL}" == "certbot" ] || [ "${CLI_TOOL}" == "acme.sh" ] ; then
     echo "The cli tool '${CLI_TOOL}' will be used"
 else
     echo "The variable CLI_TOOL can only be 'certbot' or 'acme.sh' and currently it is '${CLI_TOOL}'"
@@ -23,9 +21,7 @@ else
 fi
 
 ### Select acme challenge method
-if [ -z "${ACME_METHOD:-}" ]; then
-    ACME_METHOD=http
-elif [ "${ACME_METHOD}" == "http" ]; then
+if [ "${ACME_METHOD}" == "http" ]; then
     echo "The acme challenge selected is '${ACME_METHOD}'"
 elif [ "${ACME_METHOD::3}" == "dns" ]; then
     [ "${CLI_TOOL}" == "certbot" ] && ACME_METHOD="dns-${ACME_METHOD:4}"
