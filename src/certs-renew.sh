@@ -12,7 +12,7 @@ source "/env.sh"
 echo Renew certificates ###
 ###########################
 
-if [ -d $LETSENCRYPT_LIVE ]; then
+if [ -d "${LETSENCRYPT_LIVE}" ]; then
     ### CertBot
     if [ "${CLI_TOOL}" == "certbot" ]; then
         ### HTTP Challenge
@@ -39,3 +39,4 @@ if [ -d $LETSENCRYPT_LIVE ]; then
     fi
     /usr/sbin/nginx -s reload
 fi
+
